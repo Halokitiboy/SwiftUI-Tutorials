@@ -1,18 +1,19 @@
 //
-//  ContentView.swift
+//  LandmarkDetail.swift
 //  Landmarks
 //
-//  Created by 夏正春 on 2024/3/4.
+//  Created by 夏正春 on 2024/3/7.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct LandmarkDetail: View {
+    var landmark: Landmark
     var body: some View {
-        VStack {
-            MapView()
+        ScrollView {
+            MapView(coordinate: landmark.locationCoordinate)
                   .frame(height: 300)
-            CircleImage()
+            CircleImage(image: landmark.image)
                 .offset(y:-130)
                 .padding(.bottom,-130)
             VStack(alignment: .leading) {
@@ -28,15 +29,21 @@ struct ContentView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 Divider()
-                Text("About Turtle Rock")
+                Text("About \(landmark.name)")
                      .font(.title2)
-                      Text("Descriptive text goes here.")
+                Text(landmark.description)
             }.padding()
             Spacer()
+            Text("Created by 夏正春 厉害呀")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
+        .navigationTitle(landmark.name)
+        .toolbarTitleDisplayMode(.inline)
+        .edgesIgnoringSafeArea(.top)
     }
 }
 
 #Preview {
-    ContentView()
+    LandmarkDetail(landmark: landmarks[0])
 }
